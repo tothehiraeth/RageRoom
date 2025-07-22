@@ -1,44 +1,25 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hit Game</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hit the Face</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <div class="container">
-        <div id="setup-screen">
-            <h2>Select Gender</h2>
-            <button onclick="selectGender('male')">Male</button>
-            <button onclick="selectGender('female')">Female</button>
-        </div>
+  <div class="step" id="genderStep">
+    <h2>Select Gender</h2>
+    <label><input type="radio" name="gender" value="male"> Male</label>
+    <label><input type="radio" name="gender" value="female"> Female</label>
+    <button id="nextBtn">Next</button>
+  </div>
 
-        <div id="name-screen" style="display:none;">
-            <h2>Who are we hitting today?</h2>
-            <input type="text" id="nameInput" placeholder="Enter name">
-            <button onclick="submitName()">Next</button>
-        </div>
+  <div class="step" id="nameStep" style="display:none;">
+    <h2>Who are we hitting today?</h2>
+    <input type="text" id="nameInput" placeholder="Enter a name">
+    <button id="nextNameBtn">Next</button>
+  </div>
 
-        <div id="avatar-screen" style="display:none;">
-            <h2>Choose an image or use avatar</h2>
-            <input type="file" id="imageUpload" accept="image/*">
-            <button onclick="useAvatar()">Use Avatar</button>
-        </div>
-
-        <div id="game-screen" style="display:none;">
-            <h2 id="target-name"></h2>
-            <img id="target-image" src="" alt="Target" onclick="hitTarget()">
-            <div id="scream-input">
-                <input type="text" id="screamText" placeholder="Type to scream..." onkeydown="checkScream(event)">
-            </div>
-            <div id="scream-output"></div>
-        </div>
-    </div>
-
-    <audio id="hit-sound" src="assets/knife.mp3" preload="auto"></audio>
-
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
