@@ -1,68 +1,44 @@
-body {
+body, html {
   margin: 0;
-  font-family: sans-serif;
-  background: url('assets/bg.png') no-repeat center center/cover;
+  padding: 0;
+  height: 100%;
   overflow: hidden;
 }
-
-.rage-room {
-  text-align: center;
-  color: white;
-  padding-top: 50px;
-}
-
-.title {
-  font-size: 36px;
-  color: hotpink;
-}
-
-.input-section input, .input-section select, .input-section button {
-  margin: 10px;
-  padding: 8px;
-}
-
-.avatar-section {
+#rage-room {
+  background: url('background/rage-room-bg.png') no-repeat center center fixed;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
   position: relative;
-  display: inline-block;
 }
-
-.avatar {
-  width: 300px;
-  height: auto;
-  transition: transform 0.1s ease;
-}
-
-.effect {
+#avatar {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 300px;
-  height: auto;
-  pointer-events: none;
-  display: none;
-}
-
-.username {
-  color: red;
-  font-weight: bold;
-  font-size: 24px;
-  margin-top: 10px;
-}
-
-.scream-text {
-  position: absolute;
-  top: 5%;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  font-size: 36px;
-  font-weight: bold;
-  color: red;
-  text-shadow: 1px 1px black;
-  animation: shake 0.2s ease-in-out infinite;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  transition: transform 0.1s;
 }
-
+.shake {
+  animation: shake 0.3s;
+}
 @keyframes shake {
-  0% { transform: translateX(-50%) translateY(0px); }
-  50% { transform: translateX(-48%) translateY(2px); }
-  100% { transform: translateX(-52%) translateY(-2px); }
+  0% { transform: translate(-50%, -50%) translateX(0px); }
+  25% { transform: translate(-50%, -50%) translateX(-10px); }
+  50% { transform: translate(-50%, -50%) translateX(10px); }
+  75% { transform: translate(-50%, -50%) translateX(-10px); }
+  100% { transform: translate(-50%, -50%) translateX(0px); }
+}
+.rage-word {
+  position: absolute;
+  color: red;
+  font-size: 48px;
+  font-weight: bold;
+  text-shadow: 2px 2px black;
+  transform: rotate(-10deg) skew(10deg);
+  animation: fade 180s forwards;
+}
+@keyframes fade {
+  0% { opacity: 1; }
+  100% { opacity: 0.1; }
 }

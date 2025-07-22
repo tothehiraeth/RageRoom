@@ -1,36 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RageRoom</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="rage-room">
-    <h1 class="title">Welcome to RageRoom</h1>
-    
-    <div class="input-section">
+  <div id="overlay">
+    <div id="start-screen">
+      <h1>Welcome to RageRoom</h1>
       <input type="text" id="username" placeholder="Enter your name" />
-      <select id="gender">
-        <option value="male">Male Avatar</option>
-        <option value="female">Female Avatar</option>
-      </select>
-      <input type="file" id="avatarUpload" accept="image/*">
-      <button onclick="startGame()">Start</button>
-    </div>
-
-    <div class="avatar-section" id="avatarSection" style="display:none;">
-      <img id="avatar" class="avatar" />
-      <img id="blood" class="effect blood" src="assets/blood.gif" />
-      <img id="bruise" class="effect bruise" src="assets/bruise.png" />
-      <div id="userName" class="username"></div>
-      <div id="scream" class="scream-text"></div>
+      <div>
+        <label><input type="radio" name="gender" value="male" checked /> Male</label>
+        <label><input type="radio" name="gender" value="female" /> Female</label>
+        <label><input type="file" id="photo-upload" accept="image/*" /></label>
+      </div>
+      <button id="start-button">START</button>
     </div>
   </div>
-
-  <audio id="slapSound" src="assets/slap-sound.mp3"></audio>
-  <audio id="punchSound" src="assets/punch-sound.mp3"></audio>
-
+  <div id="rage-room">
+    <img id="avatar" src="assets/avatar-male.png" alt="avatar" />
+    <div id="effects-container"></div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

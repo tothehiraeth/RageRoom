@@ -1,75 +1,50 @@
-function startGame() {
-  const name = document.getElementById("username").value;
-  const gender = document.getElementById("gender").value;
-  const upload = document.getElementById("avatarUpload").files[0];
+const avatar = document.getElementById('avatar');
+const effectsContainer = document.getElementById('effects-container');
+const rageWords = ["DISHUM!", "AAAH!", "SLAP!", "CRACK!", "FREAK!", "DIE!"];
+let hitCount = 0;
 
-  const avatar = document.getElementById("avatar");
-  const userName = document.getElementById("userName");
+function playSound(name) {
+  const audio = new Audio(`sounds/${name}`);
+  audio.play();
+}
 
-  if (upload) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      avatar.src = e.target.result;
-    };
-    reader.readAsDataURL(upload);
-  } else {
-    avatar.src = gender === "female" ? "assets/female-avatar.png" : "assets/male-avatar.png";
+function showRageWord() {
+  const word = document.createElement('div');
+  word.classList.add('rage-word');
+  word.innerText = rageWords[Math.floor(Math.random() * rageWords.length)];
+  word.style.top = `${Math.random() * 80 + 10}%`;
+  word.style.left = `${Math.random() * 80 + 10}%`;
+  effectsContainer.appendChild(word);
+}
+
+function addEffect(type) {
+  if (type === 'blood') {
+    const splatter = document.createElement('img');
+    splatter.src = 'effects/blood-splatter.png';
+    splatter.style.position = 'absolute';
+    splatter.style.top = '50%';
+    splatter.style.left = '50%';
+    splatter.style.transform = 'translate(-50%, -50%) scale(1.5)';
+    effectsContainer.appendChild(splatter);
+  } else if (type === 'bruise' && hitCount >= 5) {
+    const bruise = document.createElement('img');
+    bruise.src = 'effects/slap-mark.png';
+    bruise.style.position = 'absolute';
+    bruise.style.top = '55%';
+    bruise.style.left = '50%';
+    bruise.style.transform = 'translate(-50%, -50%)';
+    effectsContainer.appendChild(bruise);
   }
-
-  userName.textContent = name;
-  document.querySelector(".input-section").style.display = "none";
-  document.getElementById("avatarSection").style.display = "block";
 }
-// Sound effects
-const sounds = {
-  slap: new Audio('sounds/slap.mp3'),
-  punch: new Audio('sounds/punch.mp3'),
-  punch2: new Audio('sounds/punch2.mp3'),
-  knife: new Audio('sounds/knife.mp3'),
-  scream: new Audio('sounds/scream.mp3'),
-  bloodDrip: new Audio('sounds/blood-drip.mp3')
-};
 
-sounds.bloodDrip.loop = true;
-sounds.bloodDrip.volume = 0.5;
+avatar.addEventListener('click', () => {
+  hitCount++;
+  avatar.classList.add('shake');
+  setTimeout(() => avatar.classList.remove('shake'), 300);
 
-const avatarEl = document.getElementById("avatar");
-const blood = document.getElementById("blood");
-const bruise = document.getElementById("bruise");
-const scream = document.getElementById("scream");
-const slapSound = document.getElementById("slapSound");
-const punchSound = document.getElementById("punchSound");
-
-avatarEl.addEventListener("mouseenter", () => {
-  showHitEffect("dishummmm!!!");
+  const sounds = ['punch.mp3', 'slap.mp3', 'scream.mp3', 'blood-drip.mp3'];
+  playSound(sounds[Math.floor(Math.random() * sounds.length)]);
+  showRageWord();
+  addEffect('blood');
+  if (hitCount >= 5) addEffect('bruise');
 });
-
-function showHitEffect(text) {
-  // Animation
-  avatarEl.style.transform = "translateX(-5px)";
-  setTimeout(() => {
-    avatarEl.style.transform = "translateX(5px)";
-  }, 50);
-
-  setTimeout(() => {
-    avatarEl.style.transform = "translateX(0)";
-  }, 100);
-
-  // Audio
-  slapSound.play();
-  punchSound.play();
-
-  // Visuals
-  blood.style.display = "block";
-  bruise.style.display = "block";
-
-  // Text
-  scream.innerText = text;
-  scream.style.display = "block";
-
-  setTimeout(() => {
-    scream.style.display = "none";
-    blood.style.display = "none";
-    bruise.style.display = "none";
-  }, 180000); // 3 minutes
-}
