@@ -49,7 +49,6 @@ function handleHit(event) {
   mark.style.top = event.pageY + 'px';
   mark.style.width = '80px';
   mark.style.zIndex = '3';
-  document.body.appendChild(mark);
   setTimeout(() => mark.remove(), 2000);
 }
 
