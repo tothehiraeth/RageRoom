@@ -1,66 +1,128 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>RageRoom</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <title>RageRoom</title>
+    <style>
+        html, body {{ margin: 0; padding: 0; height: 100%; overflow: hidden; }}
+        body {{
+            background: url('bg.png') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+        }}
+        .page {{
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }}
+        .active {{ display: flex; }}
+        input, button {{
+            padding: 10px;
+            margin: 10px;
+            font-size: 1.2em;
+        }}
+        #screamText {{
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4em;
+            font-weight: bold;
+            color: red;
+            display: none;
+        }}
+        #avatar {{
+            position: absolute;
+            width: 200px;
+            transition: transform 0.1s;
+        }}
+    </style>
 </head>
 <body>
-  <div class="background"></div>
 
-  <!-- Gender Selection -->
-  <div class="screen" id="screen-gender">
-    <h1>Select Gender</h1>
-    <label><input type="radio" name="gender" value="male" onclick="goToName()"> Male</label>
-    <label><input type="radio" name="gender" value="female" onclick="goToName()"> Female</label>
-  </div>
+<div id="page1" class="page active">
+    <h1>Select Your Gender</h1>
+    <label><input type="radio" name="gender" value="male"> Male</label>
+    <label><input type="radio" name="gender" value="female"> Female</label><br>
+    <button onclick="goToPage2()">Next</button>
+</div>
 
-  <!-- Name and Photo Upload -->
-  <div class="screen hidden" id="screen-name">
-    <h1>Enter Your Name</h1>
-    <input type="text" id="username" placeholder="Your Name" />
-    <h2>Upload Photo (Optional)</h2>
-    <input type="file" id="photoUpload" accept="image/*" onchange="showFileName(this)">
-    <p id="file-name-display"></p>
-    <button onclick="goToAvatar()">Next</button>
-  </div>
+<div id="page2" class="page">
+    <h1>Enter Your Name and Upload Image</h1>
+    <input type="text" id="nameInput" placeholder="Your Name"><br>
+    <input type="file" id="imageUpload" accept="image/*"><br>
+    <button onclick="goToPage3()">Next</button>
+</div>
 
-  <!-- Avatar Selection -->
-  <div class="screen hidden" id="screen-avatar">
-    <h1>Create Avatar (Optional)</h1>
-    <label>Face Shape: 
-      <select id="faceShape">
-        <option>Round</option><option>Oval</option>
-      </select>
-    </label>
-    <label>Hair Style:
-      <select id="hairStyle">
-        <option>Short</option><option>Long</option><option>Curly</option>
-      </select>
-    </label>
-    <label>Hair Color:
-      <input type="color" id="hairColor" />
-    </label>
-    <label>Skin Tone:
-      <input type="color" id="skinTone" />
-    </label>
-    <button onclick="enterRageRoom()">START RAGE</button>
-  </div>
+<div id="page3" class="page">
+    <h1>Select Avatar</h1>
+    <img src="male.png" alt="Male Avatar" width="100" onclick="selectAvatar('male.png')">
+    <img src="female.png" alt="Female Avatar" width="100" onclick="selectAvatar('female.png')"><br>
+</div>
 
-  <!-- RageRoom -->
-  <div class="screen hidden" id="rage-room">
-    <h2 id="userLabel"></h2>
-    <input type="text" id="rageInput" placeholder="Type your scream..." />
-    <button onclick="scream()">Scream</button>
-    <div id="avatar-area">
-      <img id="avatar" src="" alt="avatar" onclick="triggerHit()" />
-      <div id="bruises"></div>
-    </div>
-    <div id="graffiti-texts"></div>
-  </div>
+<div id="rageRoom" class="page" onclick="hitAvatar(event)">
+    <div id="screamText"></div>
+    <img id="avatar" src="" alt="Avatar">
+    <input type="text" id="screamInput" placeholder="Type your scream!" onkeydown="if(event.key==='Enter')showScream()">
+</div>
 
-  <script src="script.js"></script>
+<audio id="slap" src="slap.mp3.mp3"></audio>
+<audio id="punch" src="punch.mp3.mp3"></audio>
+<audio id="scream" src="scream.mp3.mp3"></audio>
+
+<script>
+    function goToPage2() {{
+        const gender = document.querySelector('input[name="gender"]:checked');
+        if (!gender) return alert("Please select a gender");
+        document.getElementById('page1').classList.remove('active');
+        document.getElementById('page2').classList.add('active');
+    }}
+
+    function goToPage3() {{
+        const name = document.getElementById('nameInput').value;
+        const file = document.getElementById('imageUpload').files[0];
+        if (!name || !file) return alert("Enter your name and upload an image");
+        document.getElementById('page2').classList.remove('active');
+        document.getElementById('page3').classList.add('active');
+    }}
+
+    function selectAvatar(avatarSrc) {{
+        document.getElementById('page3').classList.remove('active');
+        document.getElementById('rageRoom').classList.add('active');
+        const avatar = document.getElementById('avatar');
+        avatar.src = avatarSrc;
+        avatar.style.left = "50%";
+        avatar.style.top = "50%";
+        avatar.style.transform = "translate(-50%, -50%)";
+    }}
+
+    function hitAvatar(e) {{
+        const sounds = ['slap', 'punch', 'scream'];
+        const sound = document.getElementById(sounds[Math.floor(Math.random() * sounds.length)]);
+        sound.currentTime = 0;
+        sound.play();
+
+        const avatar = document.getElementById('avatar');
+        const x = e.clientX - 100;
+        const y = e.clientY - 100;
+        avatar.style.left = x + "px";
+        avatar.style.top = y + "px";
+    }}
+
+    function showScream() {{
+        const text = document.getElementById('screamInput').value;
+        const div = document.getElementById('screamText');
+        div.textContent = text;
+        div.style.display = "block";
+        setTimeout(() => {{
+            div.style.display = "none";
+        }}, 180000);
+    }}
+</script>
+
 </body>
 </html>
