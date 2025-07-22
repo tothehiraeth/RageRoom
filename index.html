@@ -1,44 +1,45 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RageRoom</title>
   <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
 </head>
+
 <body>
-  <div class="screen gender-screen">
-    <h1>Select Gender</h1>
-    <button onclick="selectGender('male')">Male</button>
-    <button onclick="selectGender('female')">Female</button>
-  </div>
-
-  <div class="screen name-screen hidden">
-    <h1>Enter Character Name</h1>
-    <input type="text" id="charName" placeholder="Name..." />
-    <button onclick="goToAvatar()">Next</button>
-  </div>
-
-  <div class="screen avatar-screen hidden">
-    <h1>Choose Avatar or Upload</h1>
-    <input type="file" id="uploadImage" accept="image/*" onchange="useUploadedImage(event)" />
-    <div id="defaultAvatars">
-      <img src="assets/avatar1.png" onclick="chooseAvatar('assets/avatar1.png')" />
-      <img src="assets/avatar2.png" onclick="chooseAvatar('assets/avatar2.png')" />
+  <div id="overlay">
+    <div class="setup">
+      <h2>Select Gender</h2>
+      <button onclick="selectGender('male')">Male</button>
+      <button onclick="selectGender('female')">Female</button>
     </div>
-    <button onclick="goToRageRoom()">Start Rage!</button>
-  </div>
-
-  <div class="screen rage-room hidden">
-    <div id="rageContainer">
-      <h2 id="displayName"></h2>
-      <img id="avatarImage" src="" />
-      <div id="screamText"></div>
+    <div class="setup hidden" id="nameInput">
+      <h2>Enter Name</h2>
+      <input type="text" id="userName" placeholder="Your Name" />
+      <button onclick="submitName()">Next</button>
     </div>
-    <input type="text" id="screamInput" placeholder="Type your scream and hit Enter..." onkeydown="handleScream(event)" />
+    <div class="setup hidden" id="avatarChoice">
+      <h2>Choose Avatar</h2>
+      <div class="avatars">
+        <img src="default-male.png" alt="Default Male" onclick="selectDefaultAvatar('default-male.png')">
+        <img src="default-female.png" alt="Default Female" onclick="selectDefaultAvatar('default-female.png')">
+      </div>
+      <input type="file" id="uploadImage" accept="image/*" />
+      <button onclick="finalizeAvatar()">Start Rage</button>
+    </div>
   </div>
 
-  <script src="script.js"></script>
+  <div id="rageRoom" class="hidden">
+    <div id="bg-rage"></div>
+    <div id="userNameDisplay"></div>
+    <img id="avatar" />
+    <div id="screamContainer"></div>
+    <input type="text" id="screamInput" placeholder="Type & Hit Enter to Scream" onkeypress="handleScream(event)" />
+  </div>
 </body>
+
 </html>

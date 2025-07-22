@@ -1,53 +1,62 @@
 
-let gender = "";
-let avatar = "";
-let charName = "";
+let selectedGender = '';
+let selectedAvatar = '';
 
-function selectGender(g) {
-  gender = g;
-  document.querySelector('.gender-screen').classList.add('hidden');
-  document.querySelector('.name-screen').classList.remove('hidden');
+function selectGender(gender) {
+  selectedGender = gender;
+  document.querySelector('.setup').classList.add('hidden');
+  document.getElementById('nameInput').classList.remove('hidden');
 }
 
-function goToAvatar() {
-  charName = document.getElementById('charName').value;
-  document.querySelector('.name-screen').classList.add('hidden');
-  document.querySelector('.avatar-screen').classList.remove('hidden');
-}
-
-function chooseAvatar(path) {
-  avatar = path;
-  document.getElementById('avatarImage').src = path;
-}
-
-function useUploadedImage(event) {
-  const reader = new FileReader();
-  reader.onload = function () {
-    avatar = reader.result;
-    document.getElementById('avatarImage').src = reader.result;
-  };
-  reader.readAsDataURL(event.target.files[0]);
-}
-
-function goToRageRoom() {
-  if (!avatar) {
-    alert("Please select or upload an avatar.");
-    return;
+function submitName() {
+  const name = document.getElementById('userName').value;
+  if (name.trim() !== '') {
+    document.getElementById('nameInput').classList.add('hidden');
+    document.getElementById('avatarChoice').classList.remove('hidden');
+    document.getElementById('userNameDisplay').textContent = name;
   }
-  document.querySelector('.avatar-screen').classList.add('hidden');
-  document.querySelector('.rage-room').classList.remove('hidden');
-  document.getElementById('displayName').innerText = charName;
 }
 
-function handleScream(event) {
-  if (event.key === "Enter") {
-    const text = document.getElementById('screamInput').value;
-    const screamBox = document.getElementById('screamText');
-    screamBox.innerText = text.toUpperCase();
-    screamBox.style.fontSize = `${30 + Math.random() * 50}px`;
-    screamBox.style.transform = `rotate(${(Math.random() * 20) - 10}deg)`;
-    navigator.vibrate?.(200);
-    setTimeout(() => screamBox.innerText = "", 1000);
-    document.getElementById('screamInput').value = "";
+function selectDefaultAvatar(src) {
+  selectedAvatar = src;
+  document.getElementById('avatar').src = src;
+}
+
+function finalizeAvatar() {
+  const uploaded = document.getElementById('uploadImage').files[0];
+  if (uploaded) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      document.getElementById('avatar').src = e.target.result;
+    };
+    reader.readAsDataURL(uploaded);
+  } else {
+    document.getElementById('avatar').src = selectedAvatar;
   }
+  document.getElementById('overlay').classList.add('hidden');
+  document.getElementById('rageRoom').classList.remove('hidden');
+}
+
+function handleScream(e) {
+  if (e.key === 'Enter') {
+    const text = e.target.value.trim();
+    if (text) {
+      const scream = document.createElement('div');
+      scream.textContent = text.toUpperCase();
+      document.getElementById('screamContainer').appendChild(scream);
+      e.target.value = '';
+      setTimeout(() => scream.remove(), 1000);
+    }
+  }
+}
+
+const avatarImg = document.getElementById('avatar');
+if (avatarImg) {
+  avatarImg.addEventListener('mouseenter', () => {
+    avatarImg.style.transform = 'scale(1.1)';
+  });
+
+  avatarImg.addEventListener('mouseleave', () => {
+    avatarImg.style.transform = 'scale(1)';
+  });
 }
