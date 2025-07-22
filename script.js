@@ -1,49 +1,75 @@
 
-let step = 1;
+let selectedGender = '';
+let imageUploaded = false;
 
-function goToStep(stepNumber) {
-  document.getElementById("step" + step).classList.add("hidden");
-  step = stepNumber;
-  document.getElementById("step" + step).classList.remove("hidden");
+function selectGender(gender) {
+  selectedGender = gender;
+  document.getElementById('screen1').classList.add('hidden');
+  document.getElementById('screen2').classList.remove('hidden');
+}
+
+function goToImageUpload() {
+  document.getElementById('screen2').classList.add('hidden');
+  document.getElementById('screen3').classList.remove('hidden');
 }
 
 function previewImage(event) {
   const reader = new FileReader();
-  reader.onload = function(){
-    const output = document.getElementById("preview");
+  reader.onload = function() {
+    const output = document.createElement('img');
     output.src = reader.result;
-    output.classList.remove("hidden");
-    document.getElementById("targetImage").src = reader.result;
+    output.id = 'userImage';
+    document.getElementById('imagePreview').innerHTML = '';
+    document.getElementById('imagePreview').appendChild(output);
+    document.getElementById('avatar').src = reader.result;
+    imageUploaded = true;
   };
   reader.readAsDataURL(event.target.files[0]);
 }
 
-function showScream() {
-  const text = document.getElementById("screamText").value;
-  const scream = document.getElementById("screamDisplay");
-  scream.textContent = text;
-  scream.classList.remove("hidden");
-  setTimeout(() => scream.classList.add("hidden"), 180000);
+function goToRageRoom() {
+  const username = document.getElementById('username').value;
+  document.getElementById('displayName').textContent = username;
+  document.getElementById('screen3').classList.add('hidden');
+  document.getElementById('rageRoom').classList.remove('hidden');
+
+  if (!imageUploaded) {
+    document.getElementById('avatar').src = selectedGender === 'male'
+      ? 'assets/avatars/avatar-male.png'
+      : 'assets/avatars/avatar-female.png';
+  }
 }
 
-function hitTarget(event) {
-  const sounds = [
-    'assets/sounds/punch.mp3',
-    'assets/sounds/punch2.mp3',
-    'assets/sounds/slap.mp3',
-    'assets/sounds/scream.mp3'
-  ];
-  const sound = new Audio(sounds[Math.floor(Math.random() * sounds.length)]);
-  sound.play();
+function handleHit(event) {
+  playRandomSound();
+  const mark = document.createElement('img');
+  mark.src = 'assets/effects/slap-mark.png';
+  mark.style.position = 'absolute';
+  mark.style.left = event.pageX + 'px';
+  mark.style.top = event.pageY + 'px';
+  mark.style.width = '80px';
+  mark.style.zIndex = '3';
+  document.body.appendChild(mark);
+  setTimeout(() => mark.remove(), 2000);
+}
 
-  const bruise = document.getElementById("bruiseOverlay");
-  const blood = document.getElementById("bloodOverlay");
+function playRandomSound() {
+  const sounds = ['punch.mp3', 'slap.mp3', 'scream.mp3', 'punch2.mp3', 'knife.mp3'];
+  const audio = new Audio('assets/sounds/' + sounds[Math.floor(Math.random() * sounds.length)]);
+  audio.play();
+}
 
-  bruise.classList.remove("hidden");
-  blood.classList.remove("hidden");
-
-  setTimeout(() => {
-    bruise.classList.add("hidden");
-    blood.classList.add("hidden");
-  }, 1000);
+function submitScream(event) {
+  if (event.key === 'Enter') {
+    const text = event.target.value.trim();
+    if (text !== '') {
+      const div = document.createElement('div');
+      div.textContent = text;
+      div.style.left = Math.random() * 80 + '%';
+      div.style.top = Math.random() * 80 + '%';
+      document.getElementById('screams').appendChild(div);
+      setTimeout(() => div.remove(), 180000); // 3 mins
+      event.target.value = '';
+    }
+  }
 }
