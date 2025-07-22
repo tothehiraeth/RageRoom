@@ -1,25 +1,36 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hit the Face</title>
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hit Simulator</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="step" id="genderStep">
-    <h2>Select Gender</h2>
-    <label><input type="radio" name="gender" value="male"> Male</label>
-    <label><input type="radio" name="gender" value="female"> Female</label>
-    <button id="nextBtn">Next</button>
-  </div>
-
-  <div class="step" id="nameStep" style="display:none;">
-    <h2>Who are we hitting today?</h2>
-    <input type="text" id="nameInput" placeholder="Enter a name">
-    <button id="nextNameBtn">Next</button>
-  </div>
-
-  <script src="script.js"></script>
+    <div id="overlay">
+        <div class="step" id="genderStep">
+            <h2>Select Gender</h2>
+            <button onclick="selectGender('male')">Male</button>
+            <button onclick="selectGender('female')">Female</button>
+        </div>
+        <div class="step" id="nameStep" style="display:none;">
+            <h2>Who are we hitting today?</h2>
+            <input type="text" id="targetName" placeholder="Enter name..." />
+            <button onclick="goToImageStep()">Next</button>
+        </div>
+        <div class="step" id="imageStep" style="display:none;">
+            <h2>Upload Image or Use Avatar</h2>
+            <input type="file" accept="image/*" id="imageUpload" />
+            <button onclick="startGame()">Start</button>
+        </div>
+    </div>
+    <div id="gameArea" style="display:none;">
+        <img id="targetImage" class="target" onclick="hit()" />
+        <button id="screamButton" onclick="scream()">SCREAM</button>
+    </div>
+    <audio id="hitSound" src="assets/knife.mp3.mp3"></audio>
+    <audio id="screamSound" src="assets/scream.mp3"></audio>
+    <script src="script.js"></script>
 </body>
 </html>
