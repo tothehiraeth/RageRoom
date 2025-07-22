@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rage Room</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="rage-room">
+    <h1>Rage Room</h1>
+    <div id="character-area">
+      <img id="character" src="images/character.png" alt="Target" />
+    </div>
+    <div class="controls">
+      <button onclick="punch()">👊 Punch</button>
+      <button onclick="slap()">🖐️ Slap</button>
+      <button onclick="scream()">😱 Scream</button>
+    </div>
+    <audio id="punchSound" src="sounds/punch.mp3"></audio>
+    <audio id="slapSound" src="sounds/slap.mp3"></audio>
+    <audio id="screamSound" src="sounds/scream.mp3"></audio>
+    <div id="blood-splatter"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
