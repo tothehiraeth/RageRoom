@@ -8,32 +8,38 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="screen" id="screen1">
-    <h1>Select Gender</h1>
-    <button onclick="selectGender('male')">Male</button>
-    <button onclick="selectGender('female')">Female</button>
-  </div>
-
-  <div class="screen" id="screen2" style="display:none;">
-    <h1>Who are we hitting today?</h1>
-    <input type="text" id="nameInput" placeholder="Enter name" />
-    <button onclick="goToPhoto()">Next</button>
-  </div>
-
-  <div class="screen" id="screen3" style="display:none;">
-    <h1>Upload a Photo</h1>
-    <input type="file" id="imageUpload" accept="image/*" />
-    <button onclick="startRage()">Start</button>
-  </div>
-
-  <div class="screen" id="rageRoom" style="display:none;">
-    <div class="rage-content">
-      <img id="targetImage" src="" alt="Target" />
-      <h2 id="targetName"></h2>
+  <div id="app">
+    <div class="screen" id="screen-gender">
+      <h2>Choose Gender</h2>
+      <button onclick="selectGender('male')">Male</button>
+      <button onclick="selectGender('female')">Female</button>
     </div>
-    <input type="text" id="screamInput" placeholder="Type your scream and hit enter" />
-    <div id="screamsContainer"></div>
+
+    <div class="screen hidden" id="screen-name">
+      <h2>Who are we hitting today?</h2>
+      <input type="text" id="userName" placeholder="Enter name" />
+      <button onclick="goToPhoto()">Next</button>
+    </div>
+
+    <div class="screen hidden" id="screen-photo">
+      <h2>Upload an image or use avatar</h2>
+      <input type="file" accept="image/*" id="photoInput" />
+      <button onclick="useAvatar()">Use Avatar</button>
+      <button onclick="startRageRoom()">Start</button>
+    </div>
+
+    <div class="screen hidden" id="rage-room">
+      <h2 id="rageName"></h2>
+      <img id="rageAvatar" src="" />
+      <input type="text" id="screamInput" placeholder="Type and press enter to scream" />
+      <div id="screamContainer"></div>
+    </div>
   </div>
+
+  <audio id="punchSound" src="sounds/punch.mp3.mp3"></audio>
+  <audio id="slapSound" src="sounds/slap.mp3.mp3"></audio>
+  <audio id="screamSound" src="sounds/scream.mp3.mp3"></audio>
+  <audio id="knifeSound" src="sounds/knife.mp3.mp3"></audio>
 
   <script src="script.js"></script>
 </body>
