@@ -69,3 +69,21 @@ body, html {
   font-size: 2em;
   z-index: 4;
 }
+
+
+@keyframes hitLeft {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-20px) rotate(-5deg); }
+  100% { transform: translateX(0); }
+}
+@keyframes hitRight {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(20px) rotate(5deg); }
+  100% { transform: translateX(0); }
+}
+.hit-left {
+  animation: hitLeft 0.3s ease;
+}
+.hit-right {
+  animation: hitRight 0.3s ease;
+}
