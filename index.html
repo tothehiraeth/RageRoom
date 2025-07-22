@@ -1,28 +1,61 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>RageRoom</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="overlay">
-    <div id="start-screen">
-      <h1>Welcome to RageRoom</h1>
-      <input type="text" id="username" placeholder="Enter your name" />
-      <div>
-        <label><input type="radio" name="gender" value="male" checked /> Male</label>
-        <label><input type="radio" name="gender" value="female" /> Female</label>
-        <label><input type="file" id="photo-upload" accept="image/*" /></label>
-      </div>
-      <button id="start-button">START</button>
+  <div class="form-container" id="setup-screen">
+    <h1>Enter RageRoom</h1>
+    <label>Select Gender:</label>
+    <label><input type="radio" name="gender" value="male"> Male</label>
+    <label><input type="radio" name="gender" value="female"> Female</label>
+
+    <label for="username">Enter Your Name:</label>
+    <input type="text" id="username" placeholder="Your Name" />
+
+    <label for="photoUpload">Upload a Photo (optional):</label>
+    <input type="file" id="photoUpload" accept="image/*" />
+
+    <div id="avatarCreator" class="hidden">
+      <h2>Create Avatar</h2>
+      <label>Face Shape:
+        <select id="faceShape">
+          <option value="round">Round</option>
+          <option value="oval">Oval</option>
+        </select>
+      </label>
+      <label>Hair Style:
+        <select id="hairStyle">
+          <option value="short">Short</option>
+          <option value="long">Long</option>
+          <option value="curly">Curly</option>
+        </select>
+      </label>
+      <label>Hair Color:
+        <input type="color" id="hairColor" />
+      </label>
+      <label>Skin Tone:
+        <input type="color" id="skinTone" />
+      </label>
     </div>
+
+    <button onclick="startRageRoom()">START</button>
   </div>
-  <div id="rage-room">
-    <img id="avatar" src="assets/avatar-male.png" alt="avatar" />
-    <div id="effects-container"></div>
+
+  <div id="rage-room" class="hidden">
+    <img id="bg" src="background/rage-room-bg.png" alt="Background" />
+    <div id="avatar-area">
+      <img id="avatar" src="" alt="Avatar" />
+      <div id="bruises"></div>
+    </div>
+    <h2 id="username-display"></h2>
+    <div id="graffiti-texts"></div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
