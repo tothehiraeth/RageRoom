@@ -1,75 +1,12 @@
-
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #111;
-  color: #fff;
-  overflow: hidden;
-}
-
-#bg-rage {
-  background-image: url('https://i.imgur.com/LUeUEJ5.jpg');
+  padding: 0;
+  background: url('images/rage-room-bg.jpg') no-repeat center center fixed;
   background-size: cover;
-  background-position: center;
-  position: absolute;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  z-index: -1;
-  filter: brightness(0.7);
+  font-family: sans-serif;
+  color: white;
 }
-
-.setup {
+.rage-room {
   text-align: center;
-  margin-top: 20vh;
-}
-
-.hidden {
-  display: none;
-}
-
-.avatars img {
-  width: 100px;
-  margin: 0 10px;
-  border: 2px solid white;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-#rageRoom {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 5vh;
-}
-
-#avatar {
-  width: 200px;
-  height: auto;
-  border-radius: 15px;
-  margin-top: 20px;
-  transition: transform 0.2s ease;
-}
-
-#screamInput {
-  margin-top: 30px;
-  padding: 10px;
-  font-size: 1.2em;
-  width: 50%;
-  border-radius: 5px;
-  border: none;
-  outline: none;
-}
-
-#screamContainer div {
-  font-size: 2em;
-  font-weight: bold;
-  color: hotpink;
-  animation: screamPop 0.8s ease;
-  margin-top: 10px;
-}
-
-@keyframes screamPop {
-  0% { transform: scale(0.5); opacity: 0.3; }
-  50% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(1); opacity: 0; }
+  padding-top: 50px;
 }

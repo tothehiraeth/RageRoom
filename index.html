@@ -1,45 +1,19 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RageRoom</title>
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <div id="overlay">
-    <div class="setup">
-      <h2>Select Gender</h2>
-      <button onclick="selectGender('male')">Male</button>
-      <button onclick="selectGender('female')">Female</button>
-    </div>
-    <div class="setup hidden" id="nameInput">
-      <h2>Enter Name</h2>
-      <input type="text" id="userName" placeholder="Your Name" />
-      <button onclick="submitName()">Next</button>
-    </div>
-    <div class="setup hidden" id="avatarChoice">
-      <h2>Choose Avatar</h2>
-      <div class="avatars">
-        <img src="default-male.png" alt="Default Male" onclick="selectDefaultAvatar('default-male.png')">
-        <img src="default-female.png" alt="Default Female" onclick="selectDefaultAvatar('default-female.png')">
-      </div>
-      <input type="file" id="uploadImage" accept="image/*" />
-      <button onclick="finalizeAvatar()">Start Rage</button>
-    </div>
-  </div>
-
-  <div id="rageRoom" class="hidden">
-    <div id="bg-rage"></div>
-    <div id="userNameDisplay"></div>
-    <img id="avatar" />
-    <div id="screamContainer"></div>
-    <input type="text" id="screamInput" placeholder="Type & Hit Enter to Scream" onkeypress="handleScream(event)" />
+  <div class="rage-room">
+    <h1>Welcome to RageRoom</h1>
+    <canvas id="bloodCanvas"></canvas>
+    <div id="avatarContainer"></div>
+    <input type="file" id="uploadImage" accept="image/*">
+    <div id="screamTextContainer"></div>
+    <script src="script.js"></script>
   </div>
 </body>
-
 </html>
