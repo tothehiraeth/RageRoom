@@ -2,37 +2,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RageRoom</title>
-  <link rel="stylesheet" href="css/style.css" />
+    <meta charset="UTF-8">
+    <title>RageRoom</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div id="app">
-    <section id="step1" class="step active">
-      <h1>Select Gender</h1>
-      <label><input type="radio" name="gender" value="male" /> Male</label>
-      <label><input type="radio" name="gender" value="female" /> Female</label>
-      <button onclick="nextStep(1)">Next</button>
-    </section>
-    <section id="step2" class="step">
-      <h1>Enter Name & Upload Photo</h1>
-      <input type="text" id="username" placeholder="Your Name" />
-      <input type="file" id="userPhoto" />
-      <button onclick="nextStep(2)">Next</button>
-    </section>
-    <section id="step3" class="step">
-      <h1>Create Avatar</h1>
-      <img id="avatarDisplay" src="assets/male_avatar.png" alt="Avatar" />
-      <button onclick="startRage()">Start Rage</button>
-    </section>
-    <section id="rageRoom" class="step">
-      <h1 id="screamText"></h1>
-      <canvas id="rageCanvas"></canvas>
-      <input type="text" id="screamInput" placeholder="Type your scream..." />
-      <button onclick="submitScream()">Scream</button>
-    </section>
-  </div>
-  <script src="js/script.js"></script>
+    <div id="container">
+        <div id="gender-selection">
+            <h1>Select Gender</h1>
+            <label><input type="radio" name="gender" value="male"> Male</label>
+            <label><input type="radio" name="gender" value="female"> Female</label>
+            <button onclick="goToNext('name-upload')">Next</button>
+        </div>
+
+        <div id="name-upload" class="hidden">
+            <h1>Enter Your Name</h1>
+            <input type="text" id="username" placeholder="Your Name">
+            <h2>Upload Photo (Optional)</h2>
+            <input type="file" id="userPhoto" accept="image/*" onchange="previewPhoto(event)">
+            <img id="photoPreview" class="preview" src="" alt="">
+            <button onclick="goToNext('avatar-create')">Next</button>
+        </div>
+
+        <div id="avatar-create" class="hidden">
+            <h1>Create Avatar (Optional)</h1>
+            <button onclick="startRage()">START RAGE</button>
+        </div>
+
+        <div id="rage-mode" class="hidden" onclick="hitTarget(event)">
+            <img id="targetImage" src="" alt="avatar">
+            <div id="screamDisplay"></div>
+            <audio id="punchSound" src="sounds/punch.mp3"></audio>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
 </body>
 </html>

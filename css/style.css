@@ -1,27 +1,36 @@
 
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: url('../assets/background.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: white;
+    margin: 0;
+    padding: 0;
+    background-image: url('../images/background.jpg');
+    background-size: cover;
+    font-family: sans-serif;
+    color: white;
 }
-.step {
-  display: none;
-  text-align: center;
-  padding-top: 50px;
+.hidden {
+    display: none;
 }
-.step.active {
-  display: block;
+#container {
+    padding: 2em;
 }
-#rageCanvas {
-  width: 100vw;
-  height: 70vh;
-  background-color: transparent;
-  cursor: crosshair;
+h1, h2 {
+    color: yellow;
 }
-#screamText {
-  font-size: 3em;
-  color: yellow;
-  text-shadow: 2px 2px 4px #000;
+.preview {
+    width: 100px;
+    display: block;
+    margin-top: 1em;
+}
+#screamDisplay {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3em;
+    color: red;
+    font-weight: bold;
+}
+#rage-mode img {
+    width: 150px;
+    position: absolute;
 }
