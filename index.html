@@ -8,38 +8,28 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="screen" class="screen">
-    <div id="gender-screen" class="step">
-      <h1>Select Gender</h1>
-      <button onclick="selectGender('male')">Male</button>
-      <button onclick="selectGender('female')">Female</button>
-    </div>
-
-    <div id="name-screen" class="step hidden">
-      <h1>Who are we hitting today?</h1>
-      <input type="text" id="name" placeholder="Enter name" />
-      <button onclick="goToNext('avatar-screen')">Next</button>
-    </div>
-
-    <div id="avatar-screen" class="step hidden">
-      <h1>Upload a photo or use avatar</h1>
-      <input type="file" id="photo" accept="image/*" onchange="handlePhoto(event)" />
-      <div id="avatar-options">
-        <img id="avatar-preview" src="" alt="Avatar" />
-      </div>
-      <button onclick="goToNext('action-screen')">Start</button>
-    </div>
-
-    <div id="action-screen" class="step hidden">
-      <h1 id="target-name"></h1>
-      <div id="target-container">
-        <img id="target" src="" alt="Target" />
-      </div>
-      <input type="text" id="scream" placeholder="Type to scream and hit" onkeydown="handleScream(event)" />
-      <div id="screams"></div>
-    </div>
+  <div class="screen" id="screen1">
+    <h1>Choose Gender</h1>
+    <button onclick="selectGender('male')">Male</button>
+    <button onclick="selectGender('female')">Female</button>
   </div>
-  <audio id="hit-sound" src="knife.mp3.mp3" preload="auto"></audio>
+
+  <div class="screen hidden" id="screen2">
+    <h1>Who are we hitting today?</h1>
+    <input type="text" id="personName" placeholder="Enter name" />
+    <input type="file" id="imageUpload" accept="image/*" />
+    <button onclick="nextStep()">Continue</button>
+  </div>
+
+  <div class="screen hidden" id="screen3">
+    <h1 id="targetName"></h1>
+    <div id="targetContainer">
+      <img id="targetImage" src="" alt="Target" />
+    </div>
+    <input type="text" id="screamInput" placeholder="Type and press Enter to scream" />
+  </div>
+
+  <audio id="hitSound" src="knife.mp3.mp3" preload="auto"></audio>
   <script src="script.js"></script>
 </body>
 </html>
