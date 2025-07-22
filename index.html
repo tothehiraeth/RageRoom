@@ -9,17 +9,17 @@
 <body>
   <div id="app">
     <div id="screen1" class="screen">
-      <h1>Select Your Gender</h1>
+      <h1>Select  Gender</h1>
       <button onclick="selectGender('male')">Male</button>
       <button onclick="selectGender('female')">Female</button>
     </div>
     <div id="screen2" class="screen hidden">
-      <h1>Enter Your Name</h1>
-      <input type="text" id="username" placeholder="Your Name" />
+      <h1>Enter  Name</h1>
+      <input type="text" id="username" placeholder=" Name" />
       <button onclick="goToImageUpload()">Next</button>
     </div>
     <div id="screen3" class="screen hidden">
-      <h1>Upload Your Photo (or skip)</h1>
+      <h1>Upload  Photo (or skip)</h1>
       <input type="file" id="photoInput" accept="image/*" onchange="previewImage(event)" />
       <div id="imagePreview"></div>
       <button onclick="goToRageRoom()">Start Rage Room</button>
@@ -28,7 +28,7 @@
       <img id="background" src="assets/background/rage-room-bg.png" alt="bg" />
       <img id="avatar" src="" />
       <div id="screams"></div>
-      <input type="text" id="screamInput" placeholder="Type your scream and press Enter" onkeydown="submitScream(event)" />
+      <input type="text" id="screamInput" placeholder="Type  scream and press Enter" onkeydown="submitScream(event)" />
       <h2 id="displayName"></h2>
     </div>
   </div>
