@@ -1,1 +1,1 @@
-// JavaScript content here
+console.log('Rage Room Loaded');
