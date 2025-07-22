@@ -43,7 +43,7 @@ function goToRageRoom() {
 function handleHit(event) {
   playRandomSound();
   const mark = document.createElement('img');
-  mark.src = 'assets/effects/slap-mark.png';
+  mark.src = 'assets/avatars/avatar-male.png';
   mark.style.position = 'absolute';
   mark.style.left = event.pageX + 'px';
   mark.style.top = event.pageY + 'px';
