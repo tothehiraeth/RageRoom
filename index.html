@@ -2,35 +2,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hit Simulator</title>
-    <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rage Room</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div id="overlay">
-        <div class="step" id="genderStep">
-            <h2>Select Gender</h2>
-            <button onclick="selectGender('male')">Male</button>
-            <button onclick="selectGender('female')">Female</button>
-        </div>
-        <div class="step" id="nameStep" style="display:none;">
-            <h2>Who are we hitting today?</h2>
-            <input type="text" id="targetName" placeholder="Enter name..." />
-            <button onclick="goToImageStep()">Next</button>
-        </div>
-        <div class="step" id="imageStep" style="display:none;">
-            <h2>Upload Image or Use Avatar</h2>
-            <input type="file" accept="image/*" id="imageUpload" />
-            <button onclick="startGame()">Start</button>
-        </div>
+  <div class="screen" id="screen1">
+    <h1>Select Gender</h1>
+    <button onclick="selectGender('male')">Male</button>
+    <button onclick="selectGender('female')">Female</button>
+  </div>
+
+  <div class="screen" id="screen2" style="display:none;">
+    <h1>Who are we hitting today?</h1>
+    <input type="text" id="nameInput" placeholder="Enter name" />
+    <button onclick="goToPhoto()">Next</button>
+  </div>
+
+  <div class="screen" id="screen3" style="display:none;">
+    <h1>Upload a Photo</h1>
+    <input type="file" id="imageUpload" accept="image/*" />
+    <button onclick="startRage()">Start</button>
+  </div>
+
+  <div class="screen" id="rageRoom" style="display:none;">
+    <div class="rage-content">
+      <img id="targetImage" src="" alt="Target" />
+      <h2 id="targetName"></h2>
     </div>
-    <div id="gameArea" style="display:none;">
-        <img id="targetImage" class="target" onclick="hit()" />
-        <button id="screamButton" onclick="scream()">SCREAM</button>
-    </div>
-    <audio id="hitSound" src="assets/knife.mp3.mp3"></audio>
-    <audio id="screamSound" src="assets/scream.mp3"></audio>
-    <script src="script.js"></script>
+    <input type="text" id="screamInput" placeholder="Type your scream and hit enter" />
+    <div id="screamsContainer"></div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

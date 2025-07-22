@@ -1,60 +1,65 @@
 
 let gender = "";
-let avatarMale = "assets/male.png";
-let avatarFemale = "assets/female.png";
+let userName = "";
+let userImage = "";
+let defaultAvatars = {
+  male: "assets/male.png",
+  female: "assets/female.png"
+};
 
 function selectGender(g) {
-    gender = g;
-    document.getElementById("genderStep").style.display = "none";
-    document.getElementById("nameStep").style.display = "block";
+  gender = g;
+  document.getElementById('screen1').style.display = 'none';
+  document.getElementById('screen2').style.display = 'block';
 }
 
-function goToImageStep() {
-    document.getElementById("nameStep").style.display = "none";
-    document.getElementById("imageStep").style.display = "block";
+function goToPhoto() {
+  userName = document.getElementById('nameInput').value;
+  document.getElementById('screen2').style.display = 'none';
+  document.getElementById('screen3').style.display = 'block';
 }
 
-function startGame() {
-    const upload = document.getElementById("imageUpload").files[0];
-    const target = document.getElementById("targetImage");
-    if (upload) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            target.src = e.target.result;
-        };
-        reader.readAsDataURL(upload);
-    } else {
-        target.src = gender === "male" ? avatarMale : avatarFemale;
+function startRage() {
+  const input = document.getElementById('imageUpload');
+  const image = document.getElementById('targetImage');
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      userImage = e.target.result;
+      image.src = userImage;
     }
-    document.getElementById("overlay").style.display = "none";
-    document.getElementById("gameArea").style.display = "block";
+    reader.readAsDataURL(input.files[0]);
+  } else {
+    image.src = defaultAvatars[gender];
+  }
+  document.getElementById('targetName').innerText = userName;
+  document.getElementById('screen3').style.display = 'none';
+  document.getElementById('rageRoom').style.display = 'block';
 }
 
-function hit() {
-    const target = document.getElementById("targetImage");
-    const hitSound = document.getElementById("hitSound");
-    hitSound.currentTime = 0;
-    hitSound.play();
-    const randomX = Math.random() * 30 - 15;
-    const randomY = Math.random() * 30 - 15;
-    target.style.transform = `translate(-50%, -50%) translate(${randomX}px, ${randomY}px)`;
-    setTimeout(() => {
-        target.style.transform = "translate(-50%, -50%)";
-    }, 100);
-}
+document.addEventListener('click', () => {
+  const image = document.getElementById('targetImage');
+  image.classList.add('bounce');
+  setTimeout(() => {
+    image.classList.remove('bounce');
+  }, 300);
 
-function scream() {
-    const text = document.createElement("div");
-    text.innerText = document.getElementById("targetName").value || "AAAAAHHHH!";
-    text.style.position = "absolute";
-    text.style.left = Math.random() * window.innerWidth + "px";
-    text.style.top = Math.random() * window.innerHeight + "px";
-    text.style.color = "red";
-    text.style.fontSize = "2em";
-    text.style.fontWeight = "bold";
-    document.body.appendChild(text);
-    const screamSound = document.getElementById("screamSound");
-    screamSound.currentTime = 0;
-    screamSound.play();
-    setTimeout(() => document.body.removeChild(text), 3000);
-}
+  const audio = new Audio('sounds/punch.mp3');
+  audio.play();
+});
+
+document.getElementById('screamInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    const val = e.target.value.trim();
+    if (val) {
+      const scream = document.createElement('div');
+      scream.className = 'scream';
+      scream.innerText = val;
+      document.getElementById('screamsContainer').appendChild(scream);
+      setTimeout(() => {
+        scream.remove();
+      }, 180000); // 3 minutes
+      e.target.value = '';
+    }
+  }
+});
