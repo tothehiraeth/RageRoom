@@ -1,38 +1,53 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>RageRoom</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <div id="overlay">
-    <div id="screen1" class="screen active">
+  <div id="container">
+    <div id="step1" class="step">
       <h1>Select Gender</h1>
-      <label><input type="radio" name="gender" value="male" /> Male</label>
-      <label><input type="radio" name="gender" value="female" /> Female</label>
-      <button onclick="nextScreen('screen1','screen2')">Next</button>
+      <label><input type="radio" name="gender" value="male"> Male</label>
+      <label><input type="radio" name="gender" value="female"> Female</label>
+      <button onclick="goToStep(2)">Next</button>
     </div>
 
-    <div id="screen2" class="screen">
-      <h1>Enter Your Name and Upload Image</h1>
-      <input type="text" id="username" placeholder="Your Name" />
-      <input type="file" id="avatarUpload" accept="image/*" />
-      <button onclick="nextScreen('screen2','screen3')">Next</button>
+    <div id="step2" class="step hidden">
+      <h1>Enter Your Name</h1>
+      <input type="text" id="name" placeholder="Your Name"/>
+      <h2>Upload Photo (Optional)</h2>
+      <input type="file" id="imageUpload" accept="image/*" onchange="previewImage(event)"/>
+      <img id="preview" class="hidden"/>
+      <button onclick="goToStep(3)">Next</button>
     </div>
 
-    <div id="screen3" class="screen">
-      <h1>Choose Avatar</h1>
-      <img src="assets/male.png" class="avatarChoice" onclick="selectAvatar('male')" />
-      <img src="assets/female.png" class="avatarChoice" onclick="selectAvatar('female')" />
+    <div id="step3" class="step hidden">
+      <h1>Create Avatar (Optional)</h1>
+      <select id="faceShape">
+        <option>Round</option><option>Square</option>
+      </select>
+      <select id="hairStyle">
+        <option>Short</option><option>Long</option>
+      </select>
+      Hair Color: <input type="color" id="hairColor"/>
+      Skin Tone: <input type="color" id="skinTone"/>
+      <button onclick="goToStep(4)">Start Rage</button>
     </div>
-  </div>
 
-  <div id="rageRoom" onclick="hitAvatar(event)">
-    <img id="userAvatar" src="" alt="Avatar" />
-    <input id="screamInput" placeholder="Type your scream and press Enter" onkeydown="submitScream(event)" />
-    <div id="screamText"></div>
+    <div id="step4" class="step hidden">
+      <input type="text" id="screamText" placeholder="Type your scream..."/>
+      <button onclick="showScream()">Scream</button>
+      <h1 id="screamDisplay" class="hidden"></h1>
+      <div id="rageArea" onclick="hitTarget(event)">
+        <img id="targetImage" src="" alt="Avatar"/>
+        <img id="bruiseOverlay" src="assets/images/bruises.png" class="hidden effect"/>
+        <img id="bloodOverlay" src="assets/images/blood.png" class="hidden effect"/>
+      </div>
+    </div>
   </div>
 
   <script src="script.js"></script>
