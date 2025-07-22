@@ -2,54 +2,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>RageRoom</title>
-  <link rel="stylesheet" href="style.css"/>
+    <meta charset="UTF-8">
+    <title>RageRoom</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div id="container">
-    <div id="step1" class="step">
-      <h1>Select Gender</h1>
-      <label><input type="radio" name="gender" value="male"> Male</label>
-      <label><input type="radio" name="gender" value="female"> Female</label>
-      <button onclick="goToStep(2)">Next</button>
+    <div class="overlay" id="overlay">
+        <div class="step" id="step1">
+            <h1>Select Gender</h1>
+            <label><input type="radio" name="gender" value="male"> Male</label>
+            <label><input type="radio" name="gender" value="female"> Female</label>
+            <button onclick="nextStep(2)">Next</button>
+        </div>
+        <div class="step" id="step2" style="display:none;">
+            <h1>Enter Your Name</h1>
+            <input type="text" id="username" placeholder="Your Name"><br><br>
+            <h1>Upload Image</h1>
+            <input type="file" id="userImage" accept="image/*"><br><br>
+            <button onclick="nextStep(3)">Next</button>
+        </div>
+        <div class="step" id="step3" style="display:none;">
+            <h1>Create Avatar</h1>
+            <!-- Optional Avatar Controls -->
+            <button onclick="nextStep(4)">Start Rage</button>
+        </div>
+        <div class="step" id="step4" style="display:none;">
+            <h1 id="rageText" class="rageText"></h1>
+            <input type="text" id="screamText" placeholder="Type your scream...">
+            <button onclick="showScream()">Scream</button>
+            <div id="target" onclick="playSlap()">
+                <img id="rageAvatar" src="assets/background.png" alt="avatar">
+            </div>
+            <audio id="slapSound" src="assets/slap.mp3"></audio>
+            <audio id="screamSound" src="assets/scream.mp3"></audio>
+        </div>
     </div>
-
-    <div id="step2" class="step hidden">
-      <h1>Enter Your Name</h1>
-      <input type="text" id="name" placeholder="Your Name"/>
-      <h2>Upload Photo (Optional)</h2>
-      <input type="file" id="imageUpload" accept="image/*" onchange="previewImage(event)"/>
-      <img id="preview" class="hidden"/>
-      <button onclick="goToStep(3)">Next</button>
-    </div>
-
-    <div id="step3" class="step hidden">
-      <h1>Create Avatar (Optional)</h1>
-      <select id="faceShape">
-        <option>Round</option><option>Square</option>
-      </select>
-      <select id="hairStyle">
-        <option>Short</option><option>Long</option>
-      </select>
-      Hair Color: <input type="color" id="hairColor"/>
-      Skin Tone: <input type="color" id="skinTone"/>
-      <button onclick="goToStep(4)">Start Rage</button>
-    </div>
-
-    <div id="step4" class="step hidden">
-      <input type="text" id="screamText" placeholder="Type your scream..."/>
-      <button onclick="showScream()">Scream</button>
-      <h1 id="screamDisplay" class="hidden"></h1>
-      <div id="rageArea" onclick="hitTarget(event)">
-        <img id="targetImage" src="" alt="Avatar"/>
-        <img id="bruiseOverlay" src="assets/images/bruises.png" class="hidden effect"/>
-        <img id="bloodOverlay" src="assets/images/blood.png" class="hidden effect"/>
-      </div>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>

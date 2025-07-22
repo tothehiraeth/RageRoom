@@ -1,0 +1,25 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    background: url('../assets/background.png') no-repeat center center fixed;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+}
+.overlay {
+    color: white;
+    font-size: 24px;
+    padding: 50px;
+}
+.step {
+    display: block;
+}
+.rageText {
+    font-size: 48px;
+    color: yellow;
+    font-weight: bold;
+    position: absolute;
+    top: 10%;
+    width: 100%;
+    text-align: center;
+}
