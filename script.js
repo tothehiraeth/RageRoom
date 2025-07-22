@@ -1,69 +1,49 @@
 
-let selectedGender = "";
-let targetImage = "";
+let step = 1;
 
-function selectGender(gender) {
-  selectedGender = gender;
-  document.getElementById('app').classList.remove('active');
-  document.getElementById('nameScreen').classList.add('active');
+function goToStep(stepNumber) {
+  document.getElementById("step" + step).classList.add("hidden");
+  step = stepNumber;
+  document.getElementById("step" + step).classList.remove("hidden");
 }
 
-function goToImageUpload() {
-  document.getElementById('nameScreen').classList.remove('active');
-  document.getElementById('imageScreen').classList.add('active');
+function previewImage(event) {
+  const reader = new FileReader();
+  reader.onload = function(){
+    const output = document.getElementById("preview");
+    output.src = reader.result;
+    output.classList.remove("hidden");
+    document.getElementById("targetImage").src = reader.result;
+  };
+  reader.readAsDataURL(event.target.files[0]);
 }
 
-function useAvatar() {
-  targetImage = selectedGender === 'male' 
-    ? './assets/avatars/male-avatar.png' 
-    : './assets/avatars/female-avatar.png';
-  document.getElementById('imageUpload').value = null;
+function showScream() {
+  const text = document.getElementById("screamText").value;
+  const scream = document.getElementById("screamDisplay");
+  scream.textContent = text;
+  scream.classList.remove("hidden");
+  setTimeout(() => scream.classList.add("hidden"), 180000);
 }
 
-function goToRageRoom() {
-  const upload = document.getElementById('imageUpload');
-  const file = upload.files[0];
+function hitTarget(event) {
+  const sounds = [
+    'assets/sounds/punch.mp3',
+    'assets/sounds/punch2.mp3',
+    'assets/sounds/slap.mp3',
+    'assets/sounds/scream.mp3'
+  ];
+  const sound = new Audio(sounds[Math.floor(Math.random() * sounds.length)]);
+  sound.play();
 
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      targetImage = e.target.result;
-      startRageRoom();
-    };
-    reader.readAsDataURL(file);
-  } else {
-    startRageRoom();
-  }
+  const bruise = document.getElementById("bruiseOverlay");
+  const blood = document.getElementById("bloodOverlay");
+
+  bruise.classList.remove("hidden");
+  blood.classList.remove("hidden");
+
+  setTimeout(() => {
+    bruise.classList.add("hidden");
+    blood.classList.add("hidden");
+  }, 1000);
 }
-
-function startRageRoom() {
-  document.getElementById('imageScreen').classList.remove('active');
-  document.getElementById('rageRoom').classList.add('active');
-  const target = document.getElementById('target');
-  target.src = targetImage;
-  target.addEventListener('click', () => {
-    target.classList.add('shake');
-    playSound();
-    setTimeout(() => target.classList.remove('shake'), 300);
-  });
-}
-
-function playSound() {
-  const sounds = ['knife.mp3', 'slap.mp3', 'punch.mp3', 'punch2.mp3', 'scream.mp3'];
-  const chosen = sounds[Math.floor(Math.random() * sounds.length)];
-  const audio = new Audio('./assets/sounds/' + chosen);
-  audio.play();
-}
-
-document.getElementById('screamInput').addEventListener('keydown', function (e) {
-  if (e.key === 'Enter') {
-    const text = e.target.value;
-    const div = document.createElement('div');
-    div.className = 'scream';
-    div.textContent = text;
-    div.style.top = Math.random() * 80 + '%';
-    div.style.left = Math.random() * 80 + '%';
-    document.getElementById('screams').appendChild(div);
-    e.target.value = '';
-  }
-});
