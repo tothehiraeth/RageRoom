@@ -1,19 +1,25 @@
 
-function nextStep(stepNum) {
-    document.querySelectorAll('.step').forEach(el => el.style.display = 'none');
-    document.getElementById('step' + stepNum).style.display = 'block';
+let currentStep = 0;
+function nextStep(step) {
+  document.querySelector(`#step${currentStep+1}`).classList.remove("active");
+  document.querySelector(`#step${step+1}`).classList.add("active");
+  currentStep = step;
+  if (step === 2) {
+    const gender = document.querySelector('input[name="gender"]:checked').value;
+    document.getElementById("avatarDisplay").src = `assets/${gender}_avatar.png`;
+  }
 }
 
-function playSlap() {
-    document.getElementById('slapSound').play();
-    document.getElementById('screamSound').play();
+function startRage() {
+  document.querySelector(`#step${currentStep+1}`).classList.remove("active");
+  document.getElementById("rageRoom").classList.add("active");
+  currentStep++;
 }
 
-function showScream() {
-    const text = document.getElementById('screamText').value;
-    const rageText = document.getElementById('rageText');
-    rageText.innerText = text;
-    setTimeout(() => {
-        rageText.innerText = '';
-    }, 180000);
+function submitScream() {
+  const scream = document.getElementById("screamInput").value;
+  const screamText = document.getElementById("screamText");
+  screamText.textContent = scream;
+  screamText.style.display = "block";
+  setTimeout(() => { screamText.textContent = ""; }, 180000);
 }

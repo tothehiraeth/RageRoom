@@ -1,25 +1,27 @@
 
 body {
-    margin: 0;
-    padding: 0;
-    background: url('../assets/background.png') no-repeat center center fixed;
-    background-size: cover;
-    font-family: Arial, sans-serif;
-}
-.overlay {
-    color: white;
-    font-size: 24px;
-    padding: 50px;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: url('../assets/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: white;
 }
 .step {
-    display: block;
+  display: none;
+  text-align: center;
+  padding-top: 50px;
 }
-.rageText {
-    font-size: 48px;
-    color: yellow;
-    font-weight: bold;
-    position: absolute;
-    top: 10%;
-    width: 100%;
-    text-align: center;
+.step.active {
+  display: block;
+}
+#rageCanvas {
+  width: 100vw;
+  height: 70vh;
+  background-color: transparent;
+  cursor: crosshair;
+}
+#screamText {
+  font-size: 3em;
+  color: yellow;
+  text-shadow: 2px 2px 4px #000;
 }
