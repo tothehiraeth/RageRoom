@@ -1,44 +1,43 @@
-
-let avatarSrc = 'male.png'; // default
-
-function goToName() {
-  const gender = document.querySelector('input[name="gender"]:checked').value;
-  avatarSrc = gender === "male" ? "male.png" : "female.png";
-  document.getElementById("screen-gender").classList.add("hidden");
-  document.getElementById("screen-name").classList.remove("hidden");
+function nextScreen(current, next) {
+  document.getElementById(current).classList.remove("active");
+  document.getElementById(next).classList.add("active");
 }
 
-function showFileName(input) {
-  const fileDisplay = document.getElementById("file-name-display");
-  fileDisplay.textContent = input.files[0]?.name || "";
+function selectAvatar(gender) {
+  const file = document.getElementById("avatarUpload").files[0];
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById("userAvatar").src = e.target.result;
+  };
+  if (file) {
+    reader.readAsDataURL(file);
+  } else {
+    document.getElementById("userAvatar").src = `assets/${gender}.png`;
+  }
+
+  document.getElementById("overlay").style.display = "none";
+  document.getElementById("rageRoom").style.display = "block";
 }
 
-function goToAvatar() {
-  document.getElementById("screen-name").classList.add("hidden");
-  document.getElementById("screen-avatar").classList.remove("hidden");
+function hitAvatar(event) {
+  const sounds = ['slap', 'punch', 'scream'];
+  const audio = new Audio(`assets/sounds/${sounds[Math.floor(Math.random()*sounds.length)]}.mp3`);
+  audio.play();
+  const avatar = document.getElementById("userAvatar");
+  avatar.style.transform = "translate(-50%, -50%) scale(1.05)";
+  setTimeout(() => {
+    avatar.style.transform = "translate(-50%, -50%)";
+  }, 100);
 }
 
-function enterRageRoom() {
-  document.getElementById("screen-avatar").classList.add("hidden");
-  document.getElementById("rage-room").classList.remove("hidden");
-  document.getElementById("avatar").src = avatarSrc;
-  document.getElementById("bruises").style.display = "none";
-
-  const username = document.getElementById("username").value;
-  document.getElementById("userLabel").textContent = `Welcome, ${username}`;
-}
-
-function triggerHit() {
-  const bruise = document.getElementById("bruises");
-  bruise.style.display = "block";
-  const sounds = ["slap.mp3", "punch.mp3", "punch2.mp3", "knife.mp3", "scream.mp3"];
-  const randomSound = new Audio(sounds[Math.floor(Math.random() * sounds.length)]);
-  randomSound.play();
-}
-
-function scream() {
-  const text = document.getElementById("rageInput").value;
-  const graffiti = document.getElementById("graffiti-texts");
-  graffiti.textContent = text;
-  setTimeout(() => graffiti.textContent = "", 180000); // 3 minutes
+function submitScream(e) {
+  if (e.key === 'Enter') {
+    const text = document.getElementById("screamInput").value;
+    const div = document.getElementById("screamText");
+    div.textContent = text;
+    div.style.display = "block";
+    setTimeout(() => {
+      div.style.display = "none";
+    }, 180000);
+  }
 }
