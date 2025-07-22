@@ -1,74 +1,65 @@
 
 let selectedGender = '';
-let imageUploaded = false;
+let uploadedImage = null;
 
 function selectGender(gender) {
   selectedGender = gender;
-  document.getElementById('screen1').classList.add('hidden');
-  document.getElementById('screen2').classList.remove('hidden');
+  document.getElementById("gender-screen").classList.add("hidden");
+  document.getElementById("name-screen").classList.remove("hidden");
 }
 
-function goToImageUpload() {
-  document.getElementById('screen2').classList.add('hidden');
-  document.getElementById('screen3').classList.remove('hidden');
-}
+function goToNext(screenId) {
+  document.querySelectorAll(".step").forEach(div => div.classList.add("hidden"));
+  document.getElementById(screenId).classList.remove("hidden");
 
-function previewImage(event) {
-  const reader = new FileReader();
-  reader.onload = function() {
-    const output = document.createElement('img');
-    output.src = reader.result;
-    output.id = 'userImage';
-    document.getElementById('imagePreview').innerHTML = '';
-    document.getElementById('imagePreview').appendChild(output);
-    document.getElementById('avatar').src = reader.result;
-    imageUploaded = true;
-  };
-  reader.readAsDataURL(event.target.files[0]);
-}
+  if (screenId === 'avatar-screen') {
+    const avatarImg = document.getElementById("avatar-preview");
+    avatarImg.src = selectedGender === 'male' ? 'boy.png' : 'girl.png';
+  }
 
-function goToRageRoom() {
-  const username = document.getElementById('username').value;
-  document.getElementById('displayName').textContent = username;
-  document.getElementById('screen3').classList.add('hidden');
-  document.getElementById('rageRoom').classList.remove('hidden');
-
-  if (!imageUploaded) {
-    document.getElementById('avatar').src = selectedGender === 'male'
-      ? 'assets/avatars/avatar-male.png'
-      : 'assets/avatars/avatar-female.png';
+  if (screenId === 'action-screen') {
+    const name = document.getElementById("name").value;
+    document.getElementById("target-name").innerText = name || 'Target';
+    const target = document.getElementById("target");
+    target.src = uploadedImage || document.getElementById("avatar-preview").src;
   }
 }
 
-function handleHit(event) {
-  playRandomSound();
-  const mark = document.createElement('img');
-  mark.src = 'assets/avatars/avatar-male.png';
-  mark.style.position = 'absolute';
-  mark.style.left = event.pageX + 'px';
-  mark.style.top = event.pageY + 'px';
-  mark.style.width = '80px';
-  mark.style.zIndex = '3';
-  setTimeout(() => mark.remove(), 2000);
+function handlePhoto(event) {
+  const file = event.target.files[0];
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    uploadedImage = e.target.result;
+    document.getElementById("avatar-preview").src = uploadedImage;
+  };
+  if (file) {
+    reader.readAsDataURL(file);
+  }
 }
 
-function playRandomSound() {
-  const sounds = ['punch.mp3', 'slap.mp3', 'scream.mp3', 'punch2.mp3', 'knife.mp3'];
-  const audio = new Audio('assets/sounds/' + sounds[Math.floor(Math.random() * sounds.length)]);
-  audio.play();
-}
-
-function submitScream(event) {
-  if (event.key === 'Enter') {
+function handleScream(event) {
+  if (event.key === "Enter") {
     const text = event.target.value.trim();
-    if (text !== '') {
-      const div = document.createElement('div');
-      div.textContent = text;
-      div.style.left = Math.random() * 80 + '%';
-      div.style.top = Math.random() * 80 + '%';
-      document.getElementById('screams').appendChild(div);
-      setTimeout(() => div.remove(), 180000); // 3 mins
-      event.target.value = '';
+    if (text !== "") {
+      const div = document.createElement("div");
+      div.className = "scream-text";
+      div.innerText = text;
+      document.getElementById("screams").appendChild(div);
+      setTimeout(() => div.remove(), 3000);
+      event.target.value = "";
+      document.getElementById("hit-sound").play();
+      const target = document.getElementById("target");
+      target.classList.remove("bounce");
+      void target.offsetWidth; // reset animation
+      target.classList.add("bounce");
     }
   }
 }
+
+document.getElementById("target").addEventListener("click", () => {
+  document.getElementById("hit-sound").play();
+  const target = document.getElementById("target");
+  target.classList.remove("bounce");
+  void target.offsetWidth; // reset animation
+  target.classList.add("bounce");
+});
