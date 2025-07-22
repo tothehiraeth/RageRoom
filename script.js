@@ -1,97 +1,67 @@
 
-let selectedGender = '';
+let selectedGender = 'male';
 let uploadedImage = null;
-let avatarImages = {
-    male: 'assets/male_avatar.jpg',
-    female: 'assets/female_avatar.png'
-};
-let soundFiles = [
-    'assets/knife.mp3.mp3',
-    'assets/punch.mp3.mp3',
-    'assets/punch2.mp3.mp3',
-    'assets/scream.mp3.mp3',
-    'assets/slap.mp3.mp3'
-];
-let currentTarget = null;
 
 function selectGender(gender) {
     selectedGender = gender;
-    document.getElementById('genderScreen').style.display = 'none';
-    document.getElementById('nameScreen').style.display = 'block';
+    document.getElementById('setup-screen').style.display = 'none';
+    document.getElementById('name-screen').style.display = 'block';
 }
 
-function goToAvatarScreen() {
-    const name = document.getElementById('nameInput').value;
-    if (!name.trim()) return;
-    document.getElementById('nameScreen').style.display = 'none';
-    document.getElementById('avatarScreen').style.display = 'block';
+function submitName() {
+    const name = document.getElementById('nameInput').value.trim();
+    if (name !== '') {
+        document.getElementById('name-screen').style.display = 'none';
+        document.getElementById('avatar-screen').style.display = 'block';
+        document.getElementById('target-name').textContent = name;
+    }
 }
 
-function handleImageUpload(event) {
+function useAvatar() {
+    const img = document.getElementById('target-image');
+    img.src = selectedGender === 'male' ? 'assets/avatar-male.png' : 'assets/avatar-female.png';
+    showGameScreen();
+}
+
+document.getElementById('imageUpload').addEventListener('change', function(event) {
     const file = event.target.files[0];
     if (file) {
-        uploadedImage = URL.createObjectURL(file);
-        document.getElementById('avatarScreen').style.display = 'none';
-        showTargetScreen();
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.getElementById('target-image');
+            img.src = e.target.result;
+            showGameScreen();
+        };
+        reader.readAsDataURL(file);
     }
-}
-
-function chooseAvatar() {
-    document.getElementById('avatarScreen').style.display = 'none';
-    showTargetScreen();
-}
-
-function showTargetScreen() {
-    document.getElementById('targetScreen').style.display = 'block';
-    const target = document.getElementById('target');
-    if (uploadedImage) {
-        target.src = uploadedImage;
-    } else {
-        target.src = avatarImages[selectedGender];
-    }
-}
-
-function playRandomSound() {
-    const audio = new Audio(soundFiles[Math.floor(Math.random() * soundFiles.length)]);
-    audio.play();
-}
-
-function shakeTarget() {
-    const target = document.getElementById('target');
-    target.classList.add('shake');
-    setTimeout(() => {
-        target.classList.remove('shake');
-    }, 500);
-}
-
-function hitTarget(event) {
-    playRandomSound();
-    shakeTarget();
-}
-
-function scream(event) {
-    if (event.key === 'Enter') {
-        const text = document.getElementById('screamInput').value.trim();
-        if (!text) return;
-
-        const screamDiv = document.createElement('div');
-        screamDiv.classList.add('screamText');
-        screamDiv.textContent = text;
-
-        screamDiv.style.position = 'absolute';
-        screamDiv.style.top = `${Math.random() * 80 + 10}%`;
-        screamDiv.style.left = `${Math.random() * 80 + 10}%`;
-        document.body.appendChild(screamDiv);
-
-        setTimeout(() => {
-            screamDiv.remove();
-        }, 180000);
-
-        document.getElementById('screamInput').value = '';
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('target').addEventListener('click', hitTarget);
-    document.getElementById('screamInput').addEventListener('keydown', scream);
 });
+
+function showGameScreen() {
+    document.getElementById('avatar-screen').style.display = 'none';
+    document.getElementById('game-screen').style.display = 'block';
+}
+
+function hitTarget() {
+    const img = document.getElementById('target-image');
+    const sound = document.getElementById('hit-sound');
+    sound.currentTime = 0;
+    sound.play();
+
+    img.classList.add('shake');
+    setTimeout(() => img.classList.remove('shake'), 300);
+}
+
+function checkScream(event) {
+    if (event.key === 'Enter') {
+        const text = document.getElementById('screamText').value.trim();
+        if (text !== '') {
+            const screamOutput = document.getElementById('scream-output');
+            screamOutput.textContent = text;
+            screamOutput.style.display = 'block';
+            setTimeout(() => {
+                screamOutput.style.display = 'none';
+            }, 3000);
+            document.getElementById('screamText').value = '';
+        }
+    }
+}
