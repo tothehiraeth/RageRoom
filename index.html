@@ -8,51 +8,56 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="form-container" id="setup-screen">
-    <h1>Enter RageRoom</h1>
-    <label>Select Gender:</label>
-    <label><input type="radio" name="gender" value="male"> Male</label>
-    <label><input type="radio" name="gender" value="female"> Female</label>
+  <div class="background"></div>
 
-    <label for="username">Enter Your Name:</label>
-    <input type="text" id="username" placeholder="Your Name" />
-
-    <label for="photoUpload">Upload a Photo (optional):</label>
-    <input type="file" id="photoUpload" accept="image/*" />
-
-    <div id="avatarCreator" class="hidden">
-      <h2>Create Avatar</h2>
-      <label>Face Shape:
-        <select id="faceShape">
-          <option value="round">Round</option>
-          <option value="oval">Oval</option>
-        </select>
-      </label>
-      <label>Hair Style:
-        <select id="hairStyle">
-          <option value="short">Short</option>
-          <option value="long">Long</option>
-          <option value="curly">Curly</option>
-        </select>
-      </label>
-      <label>Hair Color:
-        <input type="color" id="hairColor" />
-      </label>
-      <label>Skin Tone:
-        <input type="color" id="skinTone" />
-      </label>
-    </div>
-
-    <button onclick="startRageRoom()">START</button>
+  <!-- Gender Selection -->
+  <div class="screen" id="screen-gender">
+    <h1>Select Gender</h1>
+    <label><input type="radio" name="gender" value="male" onclick="goToName()"> Male</label>
+    <label><input type="radio" name="gender" value="female" onclick="goToName()"> Female</label>
   </div>
 
-  <div id="rage-room" class="hidden">
-    <img id="bg" src="background/rage-room-bg.png" alt="Background" />
+  <!-- Name and Photo Upload -->
+  <div class="screen hidden" id="screen-name">
+    <h1>Enter Your Name</h1>
+    <input type="text" id="username" placeholder="Your Name" />
+    <h2>Upload Photo (Optional)</h2>
+    <input type="file" id="photoUpload" accept="image/*" onchange="showFileName(this)">
+    <p id="file-name-display"></p>
+    <button onclick="goToAvatar()">Next</button>
+  </div>
+
+  <!-- Avatar Selection -->
+  <div class="screen hidden" id="screen-avatar">
+    <h1>Create Avatar (Optional)</h1>
+    <label>Face Shape: 
+      <select id="faceShape">
+        <option>Round</option><option>Oval</option>
+      </select>
+    </label>
+    <label>Hair Style:
+      <select id="hairStyle">
+        <option>Short</option><option>Long</option><option>Curly</option>
+      </select>
+    </label>
+    <label>Hair Color:
+      <input type="color" id="hairColor" />
+    </label>
+    <label>Skin Tone:
+      <input type="color" id="skinTone" />
+    </label>
+    <button onclick="enterRageRoom()">START RAGE</button>
+  </div>
+
+  <!-- RageRoom -->
+  <div class="screen hidden" id="rage-room">
+    <h2 id="userLabel"></h2>
+    <input type="text" id="rageInput" placeholder="Type your scream..." />
+    <button onclick="scream()">Scream</button>
     <div id="avatar-area">
-      <img id="avatar" src="" alt="Avatar" />
+      <img id="avatar" src="" alt="avatar" onclick="triggerHit()" />
       <div id="bruises"></div>
     </div>
-    <h2 id="username-display"></h2>
     <div id="graffiti-texts"></div>
   </div>
 
