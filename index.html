@@ -3,26 +3,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rage Room</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RageRoom</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="rage-room">
-    <h1>Rage Room</h1>
-    <div id="character-area">
-      <img id="character" src="images/character.png" alt="Target" />
-    </div>
-    <div class="controls">
-      <button onclick="punch()">👊 Punch</button>
-      <button onclick="slap()">🖐️ Slap</button>
-      <button onclick="scream()">😱 Scream</button>
-    </div>
-    <audio id="punchSound" src="sounds/punch.mp3"></audio>
-    <audio id="slapSound" src="sounds/slap.mp3"></audio>
-    <audio id="screamSound" src="sounds/scream.mp3"></audio>
-    <div id="blood-splatter"></div>
+  <div class="screen gender-screen">
+    <h1>Select Gender</h1>
+    <button onclick="selectGender('male')">Male</button>
+    <button onclick="selectGender('female')">Female</button>
   </div>
+
+  <div class="screen name-screen hidden">
+    <h1>Enter Character Name</h1>
+    <input type="text" id="charName" placeholder="Name..." />
+    <button onclick="goToAvatar()">Next</button>
+  </div>
+
+  <div class="screen avatar-screen hidden">
+    <h1>Choose Avatar or Upload</h1>
+    <input type="file" id="uploadImage" accept="image/*" onchange="useUploadedImage(event)" />
+    <div id="defaultAvatars">
+      <img src="assets/avatar1.png" onclick="chooseAvatar('assets/avatar1.png')" />
+      <img src="assets/avatar2.png" onclick="chooseAvatar('assets/avatar2.png')" />
+    </div>
+    <button onclick="goToRageRoom()">Start Rage!</button>
+  </div>
+
+  <div class="screen rage-room hidden">
+    <div id="rageContainer">
+      <h2 id="displayName"></h2>
+      <img id="avatarImage" src="" />
+      <div id="screamText"></div>
+    </div>
+    <input type="text" id="screamInput" placeholder="Type your scream and hit Enter..." onkeydown="handleScream(event)" />
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>

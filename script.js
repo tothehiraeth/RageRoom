@@ -1,30 +1,53 @@
 
-function punch() {
-  document.getElementById("character").style.transform = "translateX(-20px)";
-  document.getElementById("punchSound").play();
-  showBlood();
-  setTimeout(() => {
-    document.getElementById("character").style.transform = "translateX(0)";
-  }, 100);
+let gender = "";
+let avatar = "";
+let charName = "";
+
+function selectGender(g) {
+  gender = g;
+  document.querySelector('.gender-screen').classList.add('hidden');
+  document.querySelector('.name-screen').classList.remove('hidden');
 }
 
-function slap() {
-  document.getElementById("character").style.transform = "translateX(20px)";
-  document.getElementById("slapSound").play();
-  showBlood();
-  setTimeout(() => {
-    document.getElementById("character").style.transform = "translateX(0)";
-  }, 100);
+function goToAvatar() {
+  charName = document.getElementById('charName').value;
+  document.querySelector('.name-screen').classList.add('hidden');
+  document.querySelector('.avatar-screen').classList.remove('hidden');
 }
 
-function scream() {
-  document.getElementById("screamSound").play();
+function chooseAvatar(path) {
+  avatar = path;
+  document.getElementById('avatarImage').src = path;
 }
 
-function showBlood() {
-  const splatter = document.getElementById("blood-splatter");
-  splatter.style.display = "block";
-  setTimeout(() => {
-    splatter.style.display = "none";
-  }, 300);
+function useUploadedImage(event) {
+  const reader = new FileReader();
+  reader.onload = function () {
+    avatar = reader.result;
+    document.getElementById('avatarImage').src = reader.result;
+  };
+  reader.readAsDataURL(event.target.files[0]);
+}
+
+function goToRageRoom() {
+  if (!avatar) {
+    alert("Please select or upload an avatar.");
+    return;
+  }
+  document.querySelector('.avatar-screen').classList.add('hidden');
+  document.querySelector('.rage-room').classList.remove('hidden');
+  document.getElementById('displayName').innerText = charName;
+}
+
+function handleScream(event) {
+  if (event.key === "Enter") {
+    const text = document.getElementById('screamInput').value;
+    const screamBox = document.getElementById('screamText');
+    screamBox.innerText = text.toUpperCase();
+    screamBox.style.fontSize = `${30 + Math.random() * 50}px`;
+    screamBox.style.transform = `rotate(${(Math.random() * 20) - 10}deg)`;
+    navigator.vibrate?.(200);
+    setTimeout(() => screamBox.innerText = "", 1000);
+    document.getElementById('screamInput').value = "";
+  }
 }
