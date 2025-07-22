@@ -1,1 +1,44 @@
-<!-- HTML content here -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rage Room</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="screen active" id="gender-screen">
+    <h1>Choose Gender</h1>
+    <button onclick="selectGender('male')">Male</button>
+    <button onclick="selectGender('female')">Female</button>
+  </div>
+
+  <div class="screen" id="name-screen">
+    <h1>Who are we hitting today?</h1>
+    <input type="text" id="name-input" placeholder="Enter name" />
+    <button onclick="goToImageUpload()">Next</button>
+  </div>
+
+  <div class="screen" id="image-screen">
+    <h1>Upload Image or Choose Avatar</h1>
+    <input type="file" accept="image/*" id="upload" />
+    <div>
+      <img src="images/avatar_male.jpg" id="avatar-male" class="avatar-option" onclick="selectAvatar('male')" />
+      <img src="images/avatar_female.png" id="avatar-female" class="avatar-option" onclick="selectAvatar('female')" />
+    </div>
+    <button onclick="goToRageRoom()">Start Rage Room</button>
+  </div>
+
+  <div class="screen" id="rage-room">
+    <h1 id="target-title"></h1>
+    <div id="target-container">
+      <img id="target" />
+    </div>
+    <input type="text" id="scream-input" placeholder="Type your scream and press Enter" />
+    <audio id="sound-player"></audio>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
