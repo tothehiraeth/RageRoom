@@ -1,68 +1,67 @@
 
-let gender = 'male';
+let selectedGender = 'male';
 let uploadedImage = null;
 
-function selectGender(selected) {
-  gender = selected;
-  document.getElementById('screen1').classList.add('hidden');
-  document.getElementById('screen2').classList.remove('hidden');
+function selectGender(gender) {
+    selectedGender = gender;
+    document.getElementById('setup-screen').style.display = 'none';
+    document.getElementById('name-screen').style.display = 'block';
 }
 
-function nextStep() {
-  const fileInput = document.getElementById('imageUpload');
-  const file = fileInput.files[0];
-  const reader = new FileReader();
-
-  reader.onload = function (e) {
-    uploadedImage = e.target.result;
-    showTarget();
-  };
-
-  if (file) {
-    reader.readAsDataURL(file);
-  } else {
-    showTarget();
-  }
+function submitName() {
+    const name = document.getElementById('nameInput').value.trim();
+    if (name !== '') {
+        document.getElementById('name-screen').style.display = 'none';
+        document.getElementById('avatar-screen').style.display = 'block';
+        document.getElementById('target-name').textContent = name;
+    }
 }
 
-function showTarget() {
-  const name = document.getElementById('personName').value;
-  const targetName = document.getElementById('targetName');
-  const targetImage = document.getElementById('targetImage');
-
-  targetName.textContent = name;
-
-  if (uploadedImage) {
-    targetImage.src = uploadedImage;
-  } else {
-    targetImage.src = gender === 'male' ? 'boy.png' : 'girl.png';
-  }
-
-  document.getElementById('screen2').classList.add('hidden');
-  document.getElementById('screen3').classList.remove('hidden');
+function useAvatar() {
+    const img = document.getElementById('target-image');
+    img.src = selectedGender === 'male' ? 'assets/avatar-male.png' : 'assets/avatar-female.png';
+    showGameScreen();
 }
 
-document.getElementById('targetImage').addEventListener('click', () => {
-  const image = document.getElementById('targetImage');
-  const sound = document.getElementById('hitSound');
-  image.classList.add('shake');
-  sound.currentTime = 0;
-  sound.play();
-  setTimeout(() => image.classList.remove('shake'), 300);
+document.getElementById('imageUpload').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.getElementById('target-image');
+            img.src = e.target.result;
+            showGameScreen();
+        };
+        reader.readAsDataURL(file);
+    }
 });
 
-document.getElementById('screamInput').addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    const text = e.target.value;
-    e.target.value = '';
-    scream(text);
-  }
-});
+function showGameScreen() {
+    document.getElementById('avatar-screen').style.display = 'none';
+    document.getElementById('game-screen').style.display = 'block';
+}
 
-function scream(text) {
-  const screamElement = document.createElement('div');
-  screamElement.className = 'scream-text';
-  screamElement.textContent = text;
-  document.body.appendChild(screamElement);
-  setTimeout(() => document.body.removeChild(screamElement), 3000);
+function hitTarget() {
+    const img = document.getElementById('target-image');
+    const sound = document.getElementById('hit-sound');
+    sound.currentTime = 0;
+    sound.play();
+
+    img.classList.add('shake');
+    setTimeout(() => img.classList.remove('shake'), 300);
+}
+
+function checkScream(event) {
+    if (event.key === 'Enter') {
+        const text = document.getElementById('screamText').value.trim();
+        if (text !== '') {
+            const screamOutput = document.getElementById('scream-output');
+            screamOutput.textContent = text;
+            screamOutput.style.display = 'block';
+            setTimeout(() => {
+                screamOutput.style.display = 'none';
+            }, 3000);
+            document.getElementById('screamText').value = '';
+        }
+    }
 }

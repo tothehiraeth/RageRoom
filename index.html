@@ -2,34 +2,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rage Room</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hit Game</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="screen" id="screen1">
-    <h1>Choose Gender</h1>
-    <button onclick="selectGender('male')">Male</button>
-    <button onclick="selectGender('female')">Female</button>
-  </div>
+    <div class="container">
+        <div id="setup-screen">
+            <h2>Select Gender</h2>
+            <button onclick="selectGender('male')">Male</button>
+            <button onclick="selectGender('female')">Female</button>
+        </div>
 
-  <div class="screen hidden" id="screen2">
-    <h1>Who are we hitting today?</h1>
-    <input type="text" id="personName" placeholder="Enter name" />
-    <input type="file" id="imageUpload" accept="image/*" />
-    <button onclick="nextStep()">Continue</button>
-  </div>
+        <div id="name-screen" style="display:none;">
+            <h2>Who are we hitting today?</h2>
+            <input type="text" id="nameInput" placeholder="Enter name">
+            <button onclick="submitName()">Next</button>
+        </div>
 
-  <div class="screen hidden" id="screen3">
-    <h1 id="targetName"></h1>
-    <div id="targetContainer">
-      <img id="targetImage" src="" alt="Target" />
+        <div id="avatar-screen" style="display:none;">
+            <h2>Choose an image or use avatar</h2>
+            <input type="file" id="imageUpload" accept="image/*">
+            <button onclick="useAvatar()">Use Avatar</button>
+        </div>
+
+        <div id="game-screen" style="display:none;">
+            <h2 id="target-name"></h2>
+            <img id="target-image" src="" alt="Target" onclick="hitTarget()">
+            <div id="scream-input">
+                <input type="text" id="screamText" placeholder="Type to scream..." onkeydown="checkScream(event)">
+            </div>
+            <div id="scream-output"></div>
+        </div>
     </div>
-    <input type="text" id="screamInput" placeholder="Type and press Enter to scream" />
-  </div>
 
-  <audio id="hitSound" src="knife.mp3.mp3" preload="auto"></audio>
-  <script src="script.js"></script>
+    <audio id="hit-sound" src="assets/knife.mp3" preload="auto"></audio>
+
+    <script src="script.js"></script>
 </body>
 </html>
