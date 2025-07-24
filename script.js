@@ -1,1 +1,1 @@
-// Final JavaScript will go here
+<!-- Placeholder for script.js -->
