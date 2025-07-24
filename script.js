@@ -1,1 +1,1 @@
-console.log('Rage Room Initialized');
+// Final JavaScript will go here
